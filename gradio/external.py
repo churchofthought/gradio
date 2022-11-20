@@ -349,7 +349,7 @@ def from_spaces(space_name: str, api_key: str | None, alias: str, **kwargs) -> B
 
 
 def from_spaces_blocks(config: Dict, api_key: str | None, iframe_url: str) -> Blocks:
-    api_url = "{}/api/predict/".format(iframe_url)
+    api_url = "{}/woot/predict/".format(iframe_url)
 
     headers = {"Content-Type": "application/json"}
     if api_key is not None:
@@ -409,7 +409,7 @@ def from_spaces_interface(
 ) -> Interface:
 
     config = streamline_spaces_interface(config)
-    api_url = "{}/api/predict/".format(iframe_url)
+    api_url = "{}/woot/predict/".format(iframe_url)
     headers = {"Content-Type": "application/json"}
     if api_key is not None:
         headers["Authorization"] = f"Bearer {api_key}"

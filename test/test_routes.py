@@ -44,7 +44,7 @@ class TestRoutes:
 
     def test_predict_route(self, test_client):
         response = test_client.post(
-            "/api/predict/", json={"data": ["test"], "fn_index": 0}
+            "/woot/predict/", json={"data": ["test"], "fn_index": 0}
         )
         assert response.status_code == 200
         output = dict(response.json())
@@ -59,12 +59,12 @@ class TestRoutes:
 
         app, _, _ = demo.launch(prevent_thread_lock=True)
         client = TestClient(app)
-        response = client.post("/api/p/", json={"data": ["test"]})
+        response = client.post("/woot/p/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test1"]
 
-        response = client.post("/api/q/", json={"data": ["test"]})
+        response = client.post("/woot/q/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test2"]
@@ -78,12 +78,12 @@ class TestRoutes:
 
         app, _, _ = demo.launch(prevent_thread_lock=True)
         client = TestClient(app)
-        response = client.post("/api/p/", json={"data": ["test"]})
+        response = client.post("/woot/p/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test0"]
 
-        response = client.post("/api/p_1/", json={"data": ["test"]})
+        response = client.post("/woot/p_1/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test1"]
@@ -98,23 +98,23 @@ class TestRoutes:
 
         app, _, _ = demo.launch(prevent_thread_lock=True)
         client = TestClient(app)
-        response = client.post("/api/p/", json={"data": ["test"]})
+        response = client.post("/woot/p/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test0"]
 
-        response = client.post("/api/p_1/", json={"data": ["test"]})
+        response = client.post("/woot/p_1/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test1"]
 
-        response = client.post("/api/p_1_1/", json={"data": ["test"]})
+        response = client.post("/woot/p_1_1/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test2"]
 
     def test_predict_route_without_fn_index(self, test_client):
-        response = test_client.post("/api/predict/", json={"data": ["test"]})
+        response = test_client.post("/woot/predict/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["testtest"]
@@ -134,14 +134,14 @@ class TestRoutes:
         demo.queue()
         app, _, _ = demo.launch(prevent_thread_lock=True)
         client = TestClient(app)
-        response = client.post("/api/pred/", json={"data": ["test"]})
+        response = client.post("/woot/pred/", json={"data": ["test"]})
         output = dict(response.json())
         assert output["data"] == ["Hello test"]
 
         app, _, _ = demo.launch(prevent_thread_lock=True)
         client = TestClient(app)
         response = client.post(
-            "/api/pred/", json={"data": [["test", "test2"]], "batched": True}
+            "/woot/pred/", json={"data": [["test", "test2"]], "batched": True}
         )
         output = dict(response.json())
         assert output["data"] == [["Hello test", "Hello test2"]]
@@ -157,13 +157,13 @@ class TestRoutes:
         app, _, _ = io.launch(prevent_thread_lock=True)
         client = TestClient(app)
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["test", None], "fn_index": 0, "session_hash": "_"},
         )
         output = dict(response.json())
         assert output["data"] == ["test", None]
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["test", None], "fn_index": 0, "session_hash": "_"},
         )
         output = dict(response.json())
@@ -181,7 +181,7 @@ class TestGeneratorRoutes:
         client = TestClient(app)
 
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["abc"], "fn_index": 0, "session_hash": "11"},
             headers={"Authorization": f"Bearer {app.queue_token}"},
         )
@@ -189,7 +189,7 @@ class TestGeneratorRoutes:
         assert output["data"] == ["a"]
 
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["abc"], "fn_index": 0, "session_hash": "11"},
             headers={"Authorization": f"Bearer {app.queue_token}"},
         )
@@ -197,7 +197,7 @@ class TestGeneratorRoutes:
         assert output["data"] == ["b"]
 
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["abc"], "fn_index": 0, "session_hash": "11"},
             headers={"Authorization": f"Bearer {app.queue_token}"},
         )
@@ -205,7 +205,7 @@ class TestGeneratorRoutes:
         assert output["data"] == ["c"]
 
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["abc"], "fn_index": 0, "session_hash": "11"},
             headers={"Authorization": f"Bearer {app.queue_token}"},
         )
@@ -213,7 +213,7 @@ class TestGeneratorRoutes:
         assert output["data"] == [None]
 
         response = client.post(
-            "/api/predict/",
+            "/woot/predict/",
             json={"data": ["abc"], "fn_index": 0, "session_hash": "11"},
             headers={"Authorization": f"Bearer {app.queue_token}"},
         )
@@ -322,7 +322,7 @@ class TestPassingRequest:
         )
         client = TestClient(app)
 
-        response = client.post("/api/predict/", json={"data": ["test"]})
+        response = client.post("/woot/predict/", json={"data": ["test"]})
         assert response.status_code == 200
         output = dict(response.json())
         assert output["data"] == ["test"]
@@ -336,7 +336,7 @@ def test_predict_route_is_blocked_if_api_open_false():
     assert not io.show_api
     client = TestClient(app)
     result = client.post(
-        "/api/predict", json={"fn_index": 0, "data": [5], "session_hash": "foo"}
+        "/woot/predict", json={"fn_index": 0, "data": [5], "session_hash": "foo"}
     )
     assert result.status_code == 401
 
@@ -357,10 +357,10 @@ def test_predict_route_not_blocked_if_queue_disabled():
     assert not demo.show_api
     client = TestClient(app)
 
-    result = client.post("/api/blocked", json={"data": [], "session_hash": "foo"})
+    result = client.post("/woot/blocked", json={"data": [], "session_hash": "foo"})
     assert result.status_code == 401
     result = client.post(
-        "/api/not_blocked", json={"data": ["freddy"], "session_hash": "foo"}
+        "/woot/not_blocked", json={"data": ["freddy"], "session_hash": "foo"}
     )
     assert result.status_code == 200
     assert result.json()["data"] == ["Hello, freddy!"]
@@ -381,7 +381,7 @@ def test_predict_route_not_blocked_if_routes_open():
     client = TestClient(app)
 
     result = client.post(
-        "/api/not_blocked", json={"data": ["freddy"], "session_hash": "foo"}
+        "/woot/not_blocked", json={"data": ["freddy"], "session_hash": "foo"}
     )
     assert result.status_code == 200
     assert result.json()["data"] == ["Hello, freddy!"]

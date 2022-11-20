@@ -320,8 +320,8 @@ class App(FastAPI):
         # had to use '/run' endpoint for Colab compatibility, '/api' supported for backwards compatibility
         @app.post("/run/{api_name}", dependencies=[Depends(login_check)])
         @app.post("/run/{api_name}/", dependencies=[Depends(login_check)])
-        @app.post("/api/{api_name}", dependencies=[Depends(login_check)])
-        @app.post("/api/{api_name}/", dependencies=[Depends(login_check)])
+        @app.post("/woot/{api_name}", dependencies=[Depends(login_check)])
+        @app.post("/woot/{api_name}/", dependencies=[Depends(login_check)])
         async def predict(
             api_name: str,
             body: PredictBody,
@@ -336,7 +336,7 @@ class App(FastAPI):
                 if body.fn_index is None:
                     return JSONResponse(
                         content={
-                            "error": f"This app has no endpoint /api/{api_name}/."
+                            "error": f"This app has no endpoint /woot/{api_name}/."
                         },
                         status_code=500,
                     )

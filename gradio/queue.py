@@ -272,7 +272,7 @@ class Queue:
 
         response = await AsyncRequest(
             method=AsyncRequest.Method.POST,
-            url=f"{self.server_path}api/predict",
+            url=f"{self.server_path}woot/predict",
             json=dict(data),
             headers={"Authorization": f"Bearer {self.access_token}"},
             cookies={"access-token": token} if token is not None else None,

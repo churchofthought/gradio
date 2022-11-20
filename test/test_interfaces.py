@@ -259,7 +259,7 @@ class TestInterfaceInterpretation:
         )
 
         response = client.post(
-            "/api/predict/", json={"fn_index": fn_index, "data": [10, 50, 350]}
+            "/woot/predict/", json={"fn_index": fn_index, "data": [10, 50, 350]}
         )
         assert response.json()["data"][0]["interpretation"] is not None
         iface.close()
